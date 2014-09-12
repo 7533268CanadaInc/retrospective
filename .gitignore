@@ -2,3 +2,4 @@ bower_components
 node_modules
 stylesheets/main.min.css
 stylesheets/main.css
+javascripts/react/build
