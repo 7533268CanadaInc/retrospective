@@ -26,8 +26,9 @@ module.exports = function(grunt) {
       files: {
         expand: true,
         cwd: 'javascripts/react/src/',
-        src: ['**/*.js'],
-        dest: 'javascripts/react/build'
+        src: ['**/*.jsx'],
+        dest: 'javascripts/react/build',
+        ext: '.js'
       }
     },
 
@@ -51,7 +52,7 @@ module.exports = function(grunt) {
         tasks: ['stylus', 'cssmin']
       },
       react: {
-        files: 'javascripts/react/src/**/*.js',
+        files: 'javascripts/react/src/**/*.jsx',
         tasks: 'react'
       }
     }
