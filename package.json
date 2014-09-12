@@ -1,0 +1,14 @@
+{
+  "name": "react-styl-stack",
+  "version": "0.0.1",
+  "private": false,
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-cssmin": "latest",
+    "grunt-contrib-stylus": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-react": "^0.8.2",
+    "jest-cli": "^0.1.18"
+  }
+}

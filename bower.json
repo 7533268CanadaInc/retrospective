@@ -1,0 +1,28 @@
+{
+  "name": "react-styl-stack",
+  "version": "0.0.0",
+  "authors": [
+    "gregtandiono <gregtandiono@gmail.com>"
+  ],
+  "description": "Almost everything you need to get started with React and more",
+  "keywords": [
+    "react",
+    "javascript",
+    "node",
+    "npm",
+    "bower"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uikit": "*",
+    "react": "*",
+    "underscore": "*"
+  }
+}
