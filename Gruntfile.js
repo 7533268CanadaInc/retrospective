@@ -5,9 +5,16 @@ module.exports = function(grunt) {
 
     stylus: {
       build: {
-        files: {
-          'stylesheets/main.css': 'stylus/app.styl'
-        }
+        options: {
+          compress: true
+        },
+        files: [{
+          expand: true,
+          cwd: 'stylus',
+          src: ['app.styl'],
+          dest: 'stylesheets',
+          ext: '.min.css'
+        }]
       }
     },
 
@@ -48,8 +55,8 @@ module.exports = function(grunt) {
 
     watch: {
       stylesheets: {
-        files: ['stylesheets/main.css', 'stylus/**/*.styl'],
-        tasks: ['stylus', 'cssmin']
+        files: ['stylus/**/*.styl'],
+        tasks: ['stylus']
       },
       react: {
         files: 'javascripts/react/src/**/*.jsx',
@@ -65,6 +72,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['cssmin', 'stylus', 'react', 'uglify']);
+  grunt.registerTask('default', ['stylus', 'react', 'uglify']);
   grunt.registerTask('production', ['uglify']);
 };

@@ -2,13 +2,23 @@
  * Basically Stylus is just like any other css pre-compiler without the braces and everything else, I just prefer them, because it looks clean as hell.
  */
 
+@import '_variables.styl'
+@import '_mixins'
+
 html
   font-size 14px
-  font-family 'Open Sans'
+  font-family main-font
 
 body
   background white
   width 100%
+  font-family main-font
+
+h1
+h2
+h3
+h4
+  font-family em-font
 
 @import '_overrides'
 @import '_light-theme'

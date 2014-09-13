@@ -20,13 +20,33 @@ var NavigationBar = React.createClass({
   }
 });
 
+var NavigationBarRight = React.createClass({
+  render: function() {
+    return (
+      <div className='uk-navbar-flip'>
+        {this.props.content}
+      </div>
+    )
+  }
+});
+
+var LogoContainer = React.createClass({
+  render: function() {
+    return (
+      <a className='uk-navbar-brand'>
+        {this.props.content}
+      </a>
+    )
+  }
+});
+
 var ListingComponent = React.createClass({
   render: function() {
     var listing = [];
     _.each(this.props.items, function(element, index, list) {
       listing.push(
         <li>
-          <a href={element.url}>{element.title}</a>
+          <a className={element.className} href={element.url}>{element.title}</a>
         </li>
       )
     });
@@ -34,6 +54,18 @@ var ListingComponent = React.createClass({
       <ul className='uk-navbar-nav'>
         {listing}
       </ul>
+    )
+  }
+});
+
+var SectionWithBackground = React.createClass({
+  render: function() {
+    return (
+      <section id={this.props.sectionId} className='uk-cover-background'>
+        <div className='uk-width-3-4 uk-container-center padding-y-extra-large'>
+          {this.props.content}
+        </div>
+      </section>
     )
   }
 });
