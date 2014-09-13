@@ -4,6 +4,7 @@ var MainLayout = React.createClass({
   render: function() {
     return (
       <div>
+        <HeaderComponent />
         <p>OMG</p>
       </div>
     )
