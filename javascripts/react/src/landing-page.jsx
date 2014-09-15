@@ -65,7 +65,23 @@ var IntroContent = React.createClass({
         <p className='themed-heading'>
           Modular, verbose, and ready-to-go kit
         </p>
+        <IntroAnimation />
       </div>
+    )
+  }
+});
+
+var IntroAnimation = React.createClass({
+  componentDidMount: function() {
+    var s = Snap('#fuckyou');
+    var large_circle = s.circle(200, 50, 50);
+    large_circle.attr({
+      fill: "#ffffff"
+    });
+  },
+  render: function() {
+    return (
+      <svg id='fuckyou'></svg>
     )
   }
 });
