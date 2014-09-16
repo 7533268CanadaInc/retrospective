@@ -3,3 +3,5 @@ node_modules
 stylesheets/main.min.css
 stylesheets/main.css
 javascripts/react/build/**/*.js
+*.swp
+.module-cache
