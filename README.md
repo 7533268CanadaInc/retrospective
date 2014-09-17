@@ -161,6 +161,8 @@ Let's compile the `.jsx` files into vanilla `.js` by doing this:
 You should see things we declared in the .jsx file rendered into the
 browser.
 
+***
+
 Ok let's say you've fetched an object that looks like this:
 ```json
 {
@@ -317,9 +319,10 @@ of movies.
 **app.jsx**
 ```javascript
 ...
-var MainLayout = React.createClass({
+
+var Layout = React.createClass({
   render: function() {
-    var movie_titles = _.pluck(data.movies, 'title');
+    var movie_titles = _.pluck(data.movies, 'title'); // this will give you ['Pulp Fiction', 'Inglourious Basterds', 'Reservoir Dogs']
     return (
       <div>
         <Header />
@@ -330,7 +333,100 @@ var MainLayout = React.createClass({
     )
   }
 });
+
 ...
 ```
-..and voila! You should be getting a list of movies!
+..and voila! You should get a list of movies!
 
+Let's play around with React's **Props** method. So we're going to
+modify the `ListingComponent` so that it will be more flexible.
+
+**utils.jsx**
+```javascript
+...
+
+var ListingComponent = React.createClass({
+  render: function() {
+    var listing = [];
+    _.each(this.props.items, function(item, index, list){
+      listing.push(
+        <li key={index}>{item}</li>
+      )
+    });
+    return (
+      <ul>
+        {listing}
+        {this.props.content}
+      </ul>
+    )
+  }
+});
+
+...
+```
+
+Notice that I've just included the `{this.props.content}` and let's see what
+we can do with the main app controller.
+
+**app.jsx**
+```javascript
+...
+
+var Layout = React.createClass({
+  render: function() {
+    var movie_titles = _.pluck(data.movies, 'title'); // this will give you ['Pulp Fiction', 'Inglourious Basterds', 'Reservoir Dogs']
+    return (
+      <div>
+        <Header />
+        <ListingComponent
+          items={movie_titles}
+        />
+        <ListingComponent
+          content={
+            <li>Yeap, you can do these kind of things in React, neat eh?</li>
+          }
+        />
+      </div>
+    )
+  }
+});
+
+...
+```
+
+Let's do something more complicated, let's have that same component
+populate a list that contains a movie title, year of release, and the
+stars.
+
+```javascript
+...
+
+var Layout = React.createClass({
+  render: function() {
+    var movie_listing = [];
+    _.each(data.movies, function(element, index, list) {
+      movie_listing.push(
+        <li key={index}>
+          <h4>{element.title}</h4>
+          <p>{element.year}</p>
+          <h5>Starring:</h5>
+          <p>{(element.stars).join(', ')}</p>
+        </li>
+      )
+    });
+    return (
+      <div>
+        <Header />
+        <Content />
+        <ListingComponent
+          content={movie_listing}
+        />
+      </div>
+    )
+  }
+});
+
+...
+```
+
+Refresh your browser and the component should render the correct data!

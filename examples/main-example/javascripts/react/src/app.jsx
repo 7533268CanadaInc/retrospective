@@ -35,8 +35,20 @@ var Layout = React.createClass({
   render: function() {
     var movie_titles = _.pluck(data.movies, 'title');
     var movie_stars = _.pluck(data.movies, 'stars');
+    var movie_year = _.pluck(data.movies, 'year');
     var pulp_fiction_stars = _.findWhere(movie_stars, movie_titles == 'Pulp Fiction');
-    debugger;
+    var movie_listing = [];
+    _.each(data.movies, function(element, index, list) {
+      movie_listing.push(
+        <li key={index}>
+          <h4>{element.title}</h4>
+          <p>{element.year}</p>
+          <h5>Starring:</h5>
+          <p>{(element.stars).join(', ')}</p>
+        </li>
+      )
+    });
+
     return (
       <div>
         <Header />
@@ -47,6 +59,14 @@ var Layout = React.createClass({
         <h3>The stars of Pulp Fiction</h3>
         <ListingComponent
           items={pulp_fiction_stars}
+        />
+        <ListingComponent
+          content={
+            <li>OMG, I can do this in REACT?!?</li>
+          }
+        />
+        <ListingComponent
+          content={movie_listing}
         />
       </div>
     )

@@ -12,7 +12,18 @@ var ListingComponent = React.createClass({displayName: 'ListingComponent',
     });
     return (
       React.DOM.ul(null, 
-        listing
+        listing, 
+        this.props.content
+      )
+    )
+  }
+});
+
+var StandardListing = React.createClass({displayName: 'StandardListing',
+  render: function() {
+    return (
+      React.DOM.li(null, 
+        this.props.content
       )
     )
   }
