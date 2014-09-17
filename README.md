@@ -37,7 +37,8 @@ MVC; however, it can be anything you want it to be. With **React Kit**,
 I will show you that you can create your own controller within a
 component. Enough talk, let's see some example:
 
-First of all, let's setup the project directory
+First of all, let's setup the project directory (you can also see this
+example in `examples/main-example` directory)
 ```
 my-project/
 |
@@ -68,7 +69,7 @@ its view:
     <title>My Project</title>
   </head>
   <body>
-    <div id='main-app'></div>
+    <div id='app'></div>
 
     <!-- Project Dependencies -->
     <script src="http://fb.me/react-0.11.1.js"></script>
@@ -76,13 +77,14 @@ its view:
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
     <!-- Project-Specific Scripts-->
-    <script src="javascripts/build/app.js"></script>
+    <script src="javascripts/react/build/app.js"></script>
   </body>
 </html>
 ```
 
 We're going to be using [underscore.js](http://underscorejs.org/) for the
-sake of maintaining sanity (and avoiding the use of for loops) :).
+sake of maintaining sanity (and avoiding the use of for loops or the
+dreaded nested for loops) :).
 
 **/javascripts/react/src/app.jsx**
 (Please Note that this is all written in JSX, which will compile to JS,
@@ -118,7 +120,7 @@ var Header = React.createClass({
         </ul>
       </header>
     )
-  };
+  }
 });
 
 var Content = React.createClass({
@@ -192,43 +194,143 @@ Ok let's say you've fetched an object that looks like this:
   ]
 }
 ```
-
 This is how you can use React to inject this data into the view (please
 not that I'm using underscore.js for the sake of sanity):
 
 **app.jsx**
 ```javascript
+...
+
+var Content = React.createClass({
+  render: function() {
+    var movie_titles = _.pluck(data.movies, "title"); // get just the "movie titles" from the object (underscore is amazing eh?)
+    var title_listing = _.map(movie_titles, function(titles) {
+      return <li>{titles}</li>
+    });
+    return (
+      <section id='main-content'>
+        <h3>List of Quentin Tarantino's movies</h3>
+        <ul id='list-of-directors'>
+          {title_listing}
+        </ul>
+      </section>
+    )
+  }
+});
+
+...
+```
+
+You should now see a list of movie titles populated in the view!
+
+If you open your browser console, you should see a warning that reads:
+>Each child in an array should have a unique "key" prop. Check the
+render method of Content
+
+See this documentation about this from React: http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
+
+The key can be anything you want, as long as it is unique, it can also
+be a unique string. For the sake of the example, we're going to use
+strings as keys (but, realistically, anything you retrieve should have
+a random string as ids in the object, and you should use that as keys)
+
+**app.jsx** (see line 7)
+```javascript
+...
+
+var Content = React.createClass({
+  render: function() {
+    var movie_titles = _.pluck(data.movies, "title");
+    var title_listing = _.map(movie_titles, function(titles) {
+      return <li key={titles}>{titles}</li>
+    });
+    return (
+      <section id='main-content'>
+        <h3>List of Quentin Tarantino's movies</h3>
+        <ul id='list-of-directors'>
+          {title_listing}
+        </ul>
+      </section>
+    )
+  }
+});
+
+...
+```
+
+Refresh the page, and open up the console. The warning should not be
+there anymore. If you open up the DOM inspector you will be able to see
+the keys in `data-reactid` attribute.
+
+By now, you should be able to experiment the usage of React +
+Underscore, but what I want to show you is the power of making React
+modular components, I like to call this **React Utilities** and that is
+what **React Kit** is all about!
+
+So let's create another file in `javascripts/react/src/` directory, and
+let's call it `utils.jsx` & please include the build file in the
+`index.html` file above the app.js build file, like this:
+
+```html
+...
+
+    <!-- Project-Specific Scripts-->
+    <script src="javascripts/react/build/utils.js"></script>
+    <script src="javascripts/react/build/app.js"></script>
+  </body>
+
+...
+```
+
+We're going to make a listing component with a listing method using
+underscore.js and the use of **props**.
+
+**utils.jsx**
+```javascript
 /** @jsx React.DOM */
 
-var data = {
-  name: "Quentin Tarantino",
-  occupations: ["Writer", "Director", "Actor", "Comedian"],
-  movies: [
-    {
-      title: "Pulp Fiction",
-      year: 1994,
-      stars: ["Uma Thurman", "John Travolta", "Samuel L. Jackson",
-      "Bruce Willis"],
-      genre: ["comedy", "action", "adventure"],
-      mature: true
-    },
-    {
-      title: "Inglourious Basterds",
-      year: 2009,
-      stars: ["Brad Pitt", "Michael Fassbender", "Eli Roth",
-      "Diane Kruger"],
-      genre: ["comedy", "action", "adventure"],
-      mature: true
-    },
-    {
-      title: "Reservoir Dogs",
-      year: 1992,
-      stars: ["Harvey Keitel", "Tim Roth", "Michael Madsen",
-      "Quentin Tarantino"],
-      genre: ["comedy", "action", "adventure"],
-      mature: true
-    }
-  ]
-}
-
+var ListingComponent = React.createClass({
+  render: function() {
+    var listing = [];
+    _.each(this.props.items, function(item, index, list) {
+      listing.push(
+        <li key={index}>{item}</li>
+      )
+    });
+    return (
+      <ul>
+        {listing}
+      </ul>
+    )
+  }
+});
 ```
+
+If you have used React before or at least acquainted with their use of
+`props`, you'll probably know exactly what that does. If you don't know
+what props is, here is a link that explains how `props` work:
+http://facebook.github.io/react/docs/tutorial.html
+
+So let's use this `ListingComponent` in our main layout to fetch a list
+of movies.
+
+**app.jsx**
+```javascript
+...
+var MainLayout = React.createClass({
+  render: function() {
+    var movie_titles = _.pluck(data.movies, 'title');
+    return (
+      <div>
+        <Header />
+        <ListingComponent
+          items={movie_titles}
+        />
+      </div>
+    )
+  }
+});
+...
+```
+..and voila! You should be getting a list of movies!
+
