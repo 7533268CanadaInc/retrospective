@@ -12,6 +12,9 @@ to make your life easier!
 Before you go beyond this point, please visit
 [React's](http://facebook.github.io/react/) project page and read up on
 how React works, because I won't be covering the basics of the library.
+In addition to React, I will be using
+[underscore.js](http://underscorejs.org) 90% of the time for the sake of
+sanity. (nested for loops == sad panda)
 
 Building complex UI can be quite a chore, especially if you have to
 manage 30 views and manage all the different CRUD endpoints within your
@@ -164,8 +167,10 @@ browser.
 ***
 
 Ok let's say you've fetched an object that looks like this:
-```json
-{
+
+**app.jsx**
+```javascript
+var data = {
   name: "Quentin Tarantino",
   occupations: ["Writer", "Director", "Actor", "Comedian"],
   movies: [
@@ -430,3 +435,108 @@ var Layout = React.createClass({
 ```
 
 Refresh your browser and the component should render the correct data!
+
+## Coming Soon!
+- Using Grunt to compile jsx to js
+- React Kit UI Tree Philosophy & Implementation
+- React Kit Components Documentation
+- Creating Custom Components
+- React Kit Animation using Velocity
+- Writing Tests for your react components
+
+React Kit Tree Preview:
+
+```javascript
+/** @jsx React.DOM */
+
+var MainView = React.createClass({
+  render: function() {
+    return (
+      <Content />
+    )
+  }
+});
+
+var Header = React.createClass({
+  render: function() {
+    var nav_links = [
+      {title: [<i className='uk-icon-code-fork' />, ' Fork this Project'], url: '/', className: 'call-to-action'}
+    ];
+    return (
+      <HeaderComponent
+        content={[
+          <LogoContainer
+            content={[
+              <i className='uk-icon-flash'></i>,
+              ' React Kit'
+            ]}
+          />,
+          <NavigationBar
+            content={
+              <NavigationBarRight
+                content={
+                  <ListingComponent
+                    items={nav_links}
+                  />
+                }
+              />
+            }
+          />
+        ]}
+      />
+    )
+  }
+});
+
+var Content = React.createClass({
+  render: function() {
+    return (
+      <main>
+        <SectionWithBackground
+          sectionId='intro'
+          content={[
+            <Header />,
+            <IntroContent />
+          ]}
+        />
+      </main>
+    )
+  }
+});
+
+var IntroContent = React.createClass({
+  render: function() {
+    return (
+      <div className='uk-width-1-3 uk-margin-large-top'>
+        <h1 className='themed-heading'>
+          Lightning Fast Development with React
+        </h1>
+        <p className='themed-heading'>
+          Modular, verbose, and ready-to-go kit
+        </p>
+        <IntroAnimation />
+      </div>
+    )
+  }
+});
+
+var IntroAnimation = React.createClass({
+  componentDidMount: function() {
+    var s = Snap('#svg');
+    var large_circle = s.circle(200, 50, 50);
+    large_circle.attr({
+      fill: "#ffffff"
+    });
+  },
+  render: function() {
+    return (
+      <svg id='svg'></svg>
+    )
+  }
+});
+
+React.renderComponent(
+  <MainView />,
+  document.getElementById('main-app')
+);
+```
