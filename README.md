@@ -130,7 +130,7 @@ var Content = React.createClass({
   render: function() {
     return (
       <section id='main-content'>
-        <h3>List of Quentin Tarantino's movies</h3>
+        <h3>List of Quentin Tarantino\'s movies</h3>
         <ul id='list-of-directors'>
           <li>
             Pulp Fiction
