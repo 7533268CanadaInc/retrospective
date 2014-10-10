@@ -1,3 +1,19 @@
+section.thread-container
+  max-width 600px
+  max-height 750px
+  overflow auto
+  display block
+  border 1px solid #d3d3d3
+  padding 15px
+  margin-top 50px
+  margin-bottom 50px
+  p
+    width 100%
+    display block
+    margin 30px 0
+    border-bottom 1px dashed #d3d3d3
+  h1
+    color primary-colour
 .uk-navbar
   background-color transparent
   ul
@@ -21,3 +37,60 @@
   padding-left 0
   &:hover
     color rgba(255,255,255,.75)
+
+form.uk-form
+  max-width 700px
+  padding-top 40px
+  margin 0 auto
+  #smily
+    opacity 0
+    color primary-colour
+    text-align center
+  textarea
+    margin 30px auto 0
+    font-weight 300
+    resize none
+    width 100%
+    font-size 1em
+    min-height 200px
+    &:focus
+      background-color transparent
+
+button.uk-button
+  display block
+  margin 20px auto
+  padding 3px 25px
+  background none
+  border 1px solid primary-colour
+  color primary-colour
+  text-transform capitalize
+  font-size .9em
+  border-radius(2px)
+  transition(all .1s)
+  i
+    padding 0 10px
+  &:focus
+    background primary-colour
+    color white
+  &:hover
+    background primary-colour
+    color white
+
+ul.uk-nav.uk-nav-side.special
+  position fixed
+  height 100%
+  left 0
+  opacity 0
+  width 200px
+  top 45px
+  display none
+#the-fucking-btn
+  cursor pointer
+  font-size 1.25em
+  position fixed
+  color black
+  left 20px
+  top 50px
+
+.fades-in
+  animation(is-fade-in .25s forwards)
