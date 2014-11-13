@@ -5,3 +5,4 @@ stylesheets/main.css
 javascripts/react/build/**/*.js
 *.swp
 .module-cache
+firebase.json
