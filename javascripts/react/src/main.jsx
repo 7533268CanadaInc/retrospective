@@ -4,6 +4,20 @@
 
 var MainLayout = React.createClass({
   componentDidMount: function() {
+
+
+    ref.authWithPassword({
+  email    : "bobtony@firebase.com",
+  password : "correcthorsebatterystaple"
+}, function(error, authData) {
+  if (error === null) {
+    // user authenticated with Firebase
+    console.log("User ID: " + authData.uid + ", Provider: " + authData.provider);
+  } else {
+    console.log("Error authenticating user:", error);
+  }
+});
+
     var happinessRef = new Firebase('https://retro-fah.firebaseio.com/happiness');
     var sadnessRef= new Firebase('https://retro-fah.firebaseio.com/sadness');
     var kudosRef = new Firebase('https://retro-fah.firebaseio.com/kudos');
